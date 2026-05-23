@@ -147,7 +147,13 @@ jobs:
             elif command -v apk &> /dev/null; then
                 apk add openblas-dev
             elif command -v apt-get &> /dev/null; then
-                apt-get update && apt-get install -y libopenblas-dev
+                if [ "$(dpkg --print-architecture)" = "amd64" ] && [ -n "$(command -v aarch64-linux-gnu-gcc)" ]; then
+                    dpkg --add-architecture arm64
+                    apt-get update
+                    apt-get install -y libopenblas-dev:arm64
+                else
+                    apt-get update && apt-get install -y libopenblas-dev
+                fi
             fi
 
       - name: Upload wheels as artifact

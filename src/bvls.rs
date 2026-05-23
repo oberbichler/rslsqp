@@ -150,11 +150,7 @@ pub fn bvls(
         };
     }
 
-    let itmax = if max_iter == 0 {
-        3 * n
-    } else {
-        max_iter
-    };
+    let itmax = if max_iter == 0 { 3 * n } else { max_iter };
     let huge = f64::MAX;
 
     // iz1..=iz2 tracks the Z-set boundaries within `index`.

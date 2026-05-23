@@ -196,18 +196,7 @@ fn nnls_colmajor_ws(
             if a[(npp1, j)].abs() * factor >= unorm * f64::EPSILON {
                 // Column is sufficiently independent — trial solve.
                 zz[..m].copy_from_slice(&b[..m]);
-                h12_apply(
-                    npp1,
-                    npp1 + 1,
-                    m,
-                    a.col(j),
-                    1,
-                    up,
-                    zz,
-                    1,
-                    1,
-                    1,
-                );
+                h12_apply(npp1, npp1 + 1, m, a.col(j), 1, up, zz, 1, 1, 1);
                 let ztest = zz[npp1] / a[(npp1, j)];
 
                 if ztest > ZERO {
@@ -625,18 +614,7 @@ pub fn lsi_ws(
             }
 
             let col = ws.lsi.e_cm.col(i_f);
-            h12_apply(
-                i_f,
-                i_f + 1,
-                me,
-                col,
-                1,
-                up,
-                &mut ws.lsi.f_arr,
-                1,
-                1,
-                1,
-            );
+            h12_apply(i_f, i_f + 1, me, col, 1, up, &mut ws.lsi.f_arr, 1, 1, 1);
         }
     }
 
@@ -1089,14 +1067,8 @@ pub fn lsei_ws(
             ws.lsei.b_hfti.resize_zero(rows, 1);
             let b_col = ws.lsei.b_hfti.col_mut(0);
             b_col[..me].copy_from_slice(&ws.lsei.f_reduced[..me]);
-            let (krank, rnorm_arr) = hfti(
-                &mut ws.lsei.e_sub,
-                me,
-                l,
-                &mut ws.lsei.b_hfti,
-                1,
-                tau_val,
-            );
+            let (krank, rnorm_arr) =
+                hfti(&mut ws.lsei.e_sub, me, l, &mut ws.lsei.b_hfti, 1, tau_val);
             xnorm = rnorm_arr[0];
             let b_col = ws.lsei.b_hfti.col(0);
             ws.lsei.x_out[mc..mc + l].copy_from_slice(&b_col[..l]);

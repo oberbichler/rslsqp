@@ -453,11 +453,7 @@ pub fn slsqpb(
 ) -> (f64, usize, i32) {
     profile_section!("slsqpb_total");
 
-    let mut n1 = if sdat.n1 > 0 {
-        sdat.n1
-    } else {
-        n + 1
-    };
+    let mut n1 = if sdat.n1 > 0 { sdat.n1 } else { n + 1 };
     let mut n2 = sdat.n2;
     let mut inconsistent_linearization = false;
     let mut mode = mode;
@@ -1247,13 +1243,13 @@ mod tests {
                     mode,
                     &mut ws,
                     0.1,
-                    1.0,  // alphamin, alphamax
+                    1.0, // alphamin, alphamax
                     -1.0,
                     -1.0,
                     -1.0, // tolf, toldf, toldx (disabled)
                     0,
                     NnlsMode::Nnls, // max_iter_ls, nnls_mode
-                    1e20,            // infinite_bound
+                    1e20,           // infinite_bound
                 );
                 let new_acc = result.0;
                 iter_ = result.1;

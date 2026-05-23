@@ -67,7 +67,6 @@ pub fn daxpy(n: usize, da: f64, dx: &[f64], incx: i32, dy: &mut [f64], incy: i32
         return;
     }
 
-
     // Fast path: unit strides — iterator zip enables LLVM auto-vectorisation.
     if incx == 1 && incy == 1 {
         dy[..n]
@@ -112,7 +111,6 @@ pub fn dcopy(n: usize, dx: &[f64], incx: i32, dy: &mut [f64], incy: i32) {
         crate::lapack::accel_dcopy(n, dx, incx, dy, incy);
         return;
     }
-
 
     if incx == 1 && incy == 1 {
         // Fast path: contiguous memcpy.
@@ -194,7 +192,6 @@ pub fn ddot(n: usize, dx: &[f64], incx: i32, dy: &[f64], incy: i32) -> f64 {
     if n >= 32 && incx >= 1 && incy >= 1 {
         return crate::lapack::accel_ddot(n, dx, incx, dy, incy);
     }
-
 
     if incx == 1 && incy == 1 {
         // Fast path: iterator zip — LLVM auto-vectorises this into SIMD

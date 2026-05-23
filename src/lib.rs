@@ -374,7 +374,9 @@ fn py_optimize<'py>(
             let c_ro = c_py.readonly();
             cvec = c_ro
                 .as_slice()
-                .map_err(|_| PyValueError::new_err("constraint array from func must be contiguous"))?
+                .map_err(|_| {
+                    PyValueError::new_err("constraint array from func must be contiguous")
+                })?
                 .to_vec();
             if m > 0 && !cvec.is_empty() {
                 let copy_len = m.min(cvec.len()).min(c.len());
@@ -396,9 +398,9 @@ fn py_optimize<'py>(
                 let g_item = tup.get_item(0)?;
                 let g_py = g_item.cast::<PyArray1<f64>>()?;
                 let g_ro = g_py.readonly();
-                let g_slice = g_ro
-                    .as_slice()
-                    .map_err(|_| PyValueError::new_err("gradient array from grad must be contiguous"))?;
+                let g_slice = g_ro.as_slice().map_err(|_| {
+                    PyValueError::new_err("gradient array from grad must be contiguous")
+                })?;
                 g[..n].copy_from_slice(&g_slice[..n]);
 
                 // Extract Jacobian matrix
@@ -425,7 +427,9 @@ fn py_optimize<'py>(
                     let cv: Vec<f64> = c_py
                         .readonly()
                         .as_slice()
-                        .map_err(|_| PyValueError::new_err("constraint array from func must be contiguous"))?
+                        .map_err(|_| {
+                            PyValueError::new_err("constraint array from func must be contiguous")
+                        })?
                         .to_vec();
                     Ok((fv, cv))
                 };

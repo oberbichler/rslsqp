@@ -591,13 +591,7 @@ pub fn hfti(
         // Construct Householder reflector for column j, rows j..m.
         // Column-major: column j is contiguous starting at a.data[j*a_stride].
         // iue = 1 because elements within a column are contiguous.
-        let up = h12_construct(
-            j,
-            j + 1,
-            m,
-            &mut a.data[j * a_stride..],
-            1,
-        );
+        let up = h12_construct(j, j + 1, m, &mut a.data[j * a_stride..], 1);
         h_arr[j] = up;
 
         // Apply Householder to remaining columns of A (j+1..n).

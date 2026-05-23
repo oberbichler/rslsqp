@@ -93,19 +93,17 @@ jobs:
         with:
           ref: "v${{ needs.prepare-release.outputs.version }}"
 
-      - name: Install static OpenBLAS via vcpkg
+      - name: Download and extract precompiled OpenBLAS with LAPACK
         run: |
-          vcpkg install openblas:x64-windows-static
-
-      - name: List vcpkg installed files
-        run: |
-          dir C:\vcpkg\installed\x64-windows-static\lib
+          curl.exe -L -o openblas.zip https://github.com/OpenMathLib/OpenBLAS/releases/download/v0.3.28/OpenBLAS-0.3.28-x64.zip
+          Expand-Archive -Path openblas.zip -DestinationPath C:\openblas -Force
+          Copy-Item C:\openblas\libopenblas.lib C:\openblas\openblas.lib
 
       - name: Build wheels using Maturin
         uses: PyO3/maturin-action@v1
         env:
           # Tell Rust linker where to find static openblas and to link it statically
-          RUSTFLAGS: "-L C:\\vcpkg\\installed\\x64-windows-static\\lib -l static=openblas"
+          RUSTFLAGS: "-L C:\\openblas -l static=openblas"
         with:
           target: x86_64
           args: --release --out dist --features blas

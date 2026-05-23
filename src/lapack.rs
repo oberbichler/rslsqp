@@ -154,7 +154,6 @@ mod ffi {
         );
 
         // LAPACK — unpivoted QR factorization (blocked, BLAS L3)
-        #[cfg_attr(target_os = "windows", link_name = "dgeqrf")]
         pub fn dgeqrf_(
             m: *const c_int,
             n: *const c_int,
@@ -167,7 +166,6 @@ mod ffi {
         );
 
         // LAPACK — unpivoted QR factorization (unblocked, BLAS L2)
-        #[cfg_attr(target_os = "windows", link_name = "dgeqr2")]
         pub fn dgeqr2_(
             m: *const c_int,
             n: *const c_int,
@@ -179,7 +177,6 @@ mod ffi {
         );
 
         // LAPACK — column-pivoted QR (blocked, BLAS L3)
-        #[cfg_attr(target_os = "windows", link_name = "dgeqp3")]
         pub fn dgeqp3_(
             m: *const c_int,
             n: *const c_int,
@@ -193,7 +190,6 @@ mod ffi {
         );
 
         // LAPACK — apply Q from QR to a matrix (blocked, BLAS L3)
-        #[cfg_attr(target_os = "windows", link_name = "dormqr")]
         pub fn dormqr_(
             side: *const u8,
             trans: *const u8,
@@ -211,7 +207,6 @@ mod ffi {
         );
 
         // LAPACK — apply Q from QR to a matrix (unblocked, BLAS L2)
-        #[cfg_attr(target_os = "windows", link_name = "dorm2r")]
         pub fn dorm2r_(
             side: *const u8,
             trans: *const u8,
@@ -228,7 +223,6 @@ mod ffi {
         );
 
         // LAPACK — solve triangular system with multiple RHS
-        #[cfg_attr(target_os = "windows", link_name = "dtrtrs")]
         pub fn dtrtrs_(
             uplo: *const u8,
             trans: *const u8,

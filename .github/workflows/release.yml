@@ -67,7 +67,10 @@ jobs:
       - name: Create and push Git tag
         run: |
           if git rev-parse "v${{ inputs.version }}" >/dev/null 2>&1; then
-            echo "Tag v${{ inputs.version }} already exists."
+            echo "Tag v${{ inputs.version }} already exists. Force updating tag."
+            git tag -f "v${{ inputs.version }}"
+            git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+            git push origin "v${{ inputs.version }}" --force
           else
             git tag "v${{ inputs.version }}"
             git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"

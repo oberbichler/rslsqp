@@ -135,6 +135,8 @@ jobs:
 
       - name: Build wheels using Maturin (manylinux)
         uses: PyO3/maturin-action@v1
+        env:
+          LIBRARY_PATH: ${{ matrix.target == 'aarch64' && '/usr/lib/aarch64-linux-gnu' || '' }}
         with:
           target: ${{ matrix.target }}
           args: --release --out dist --features blas

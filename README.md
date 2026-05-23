@@ -31,9 +31,11 @@ import line — get a faster solver.
 
 ## Installation
 
-Install the package directly from PyPI (includes precompiled, BLAS-accelerated binary wheels for Windows, Linux, and macOS):
+Install the package directly from PyPI. It includes precompiled, BLAS-accelerated binary wheels for Windows, Linux, and macOS:
 
 ```bash
+uv add rslsqp
+# or
 pip install rslsqp
 ```
 

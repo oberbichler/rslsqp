@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="logo.png" alt="rslsqp logo" width="300" />
+</p>
+
 # rslsqp
 
 A **fast, pure-Rust reimplementation** of the classic SLSQP (Sequential

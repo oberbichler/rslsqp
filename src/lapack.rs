@@ -59,6 +59,9 @@ mod ffi {
 
     use std::os::raw::c_int;
 
+    #[cfg_attr(target_os = "macos", link(name = "Accelerate", kind = "framework"))]
+    #[cfg_attr(target_os = "linux", link(name = "openblas", kind = "dylib"))]
+    #[cfg_attr(target_os = "windows", link(name = "openblas", kind = "static"))]
     unsafe extern "C" {
         // BLAS Level 1
         pub fn cblas_daxpy(

@@ -92,7 +92,7 @@ jobs:
 
       - name: Install static OpenBLAS via vcpkg
         run: |
-          vcpkg install openblas[lapack]:x64-windows-static
+          vcpkg install openblas:x64-windows-static
 
       - name: Build wheels using Maturin
         uses: PyO3/maturin-action@v1

@@ -18,6 +18,17 @@ pyo3 = { version = "0.28.2", features = ["extension-module", "abi3-py39"] }
 numpy = "0.28"
 ndarray = "0.17"
 
+[lints.clippy]
+too_many_arguments = "allow"
+needless_range_loop = "allow"
+collapsible_if = "allow"
+assign_op_pattern = "allow"
+ptr_arg = "allow"
+manual_saturating_arithmetic = "allow"
+implicit_saturating_sub = "allow"
+doc_overindented_list_items = "allow"
+type_complexity = "allow"
+
 [profile.release]
 opt-level = 3
 lto = "fat"

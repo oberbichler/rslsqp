@@ -286,7 +286,11 @@ def slsqp(
 
 def optimize(
     func: Callable[[npt.NDArray[np.float64]], tuple[float, npt.NDArray[np.float64]]],
-    grad: Callable[[npt.NDArray[np.float64]], tuple[npt.NDArray[np.float64], npt.NDArray[np.float64]]] | None,
+    grad: Callable[
+        [npt.NDArray[np.float64]],
+        tuple[npt.NDArray[np.float64], npt.NDArray[np.float64]],
+    ]
+    | None,
     x0: npt.NDArray[np.float64],
     xl: npt.NDArray[np.float64],
     xu: npt.NDArray[np.float64],

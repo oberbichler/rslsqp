@@ -344,7 +344,6 @@ class SlsqpSolver:
         """
         x = np.array(x0, dtype=float, copy=True)
         n = self._n
-        m = self._m
 
         if x.size != n:
             status = SlsqpStatus.INVALID_X_SIZE
@@ -369,7 +368,6 @@ class SlsqpSolver:
 
     def _optimize_rust(self, x: np.ndarray) -> SlsqpResult:
         """Fast path: delegate the entire iteration loop to Rust."""
-        n = self._n
         m = self._m
         grad_fn = self._grad if self._gradient_mode == GradientMode.USER else None
 
@@ -489,12 +487,16 @@ class SlsqpSolver:
                 # report final solution
                 if mode == 0 and self._callback is not None:
                     self._callback(i_iter, x.copy(), f_val, cvec.copy())
-                self._report_message(str(_STATUS_FROM_MODE.get(mode, SlsqpStatus.UNKNOWN)))
+                self._report_message(
+                    str(_STATUS_FROM_MODE.get(mode, SlsqpStatus.UNKNOWN))
+                )
                 break
 
             if self._user_triggered_stop:
                 mode = -2
-                self._report_message(str(_STATUS_FROM_MODE.get(mode, SlsqpStatus.UNKNOWN)))
+                self._report_message(
+                    str(_STATUS_FROM_MODE.get(mode, SlsqpStatus.UNKNOWN))
+                )
                 self._user_triggered_stop = False
                 break
 

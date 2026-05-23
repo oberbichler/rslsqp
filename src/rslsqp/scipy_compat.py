@@ -26,7 +26,7 @@ The returned ``result`` object has the same attributes as
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Callable, Sequence
+from typing import Any, Callable, Sequence, cast
 
 import numpy as np
 
@@ -126,14 +126,16 @@ def _parse_constraints(
     if the corresponding block has no Jacobian.
     """
     if isinstance(constraints, dict):
-        constraints = [constraints]
+        cons_list: Sequence[ConstraintDict] = [cast(ConstraintDict, constraints)]
+    else:
+        cons_list = constraints
 
     eq_funs: list[Callable] = []
     eq_jacs: list[Callable | None] = []
     ineq_funs: list[Callable] = []
     ineq_jacs: list[Callable | None] = []
 
-    for con in constraints:
+    for con in cons_list:
         ctype = con.get("type", "").lower()
         cfun = con["fun"]
         cjac = con.get("jac", None)
@@ -402,7 +404,7 @@ def minimize(
                 # callable(jac) is guaranteed here since use_analytic_grad
                 # requires has_analytic_obj_jac which means jac is True or
                 # callable.
-                g = np.asarray(jac(x, *args), dtype=float)  # type: ignore[operator]
+                g = np.asarray(cast(Callable, jac)(x, *args), dtype=float)
 
             # Constraint Jacobian: rows are equalities first, then inequalities
             a_parts: list[np.ndarray] = []

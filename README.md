@@ -31,11 +31,19 @@ import line — get a faster solver.
 
 ## Installation
 
-Requires **Python ≥ 3.12**, a Rust toolchain, and [maturin](https://www.maturin.rs/).
+Install the package directly from PyPI (includes precompiled, BLAS-accelerated binary wheels for Windows, Linux, and macOS):
+
+```bash
+pip install rslsqp
+```
+
+### Building from source (optional)
+
+Building from source requires **Python ≥ 3.12**, a Rust toolchain, and [maturin](https://www.maturin.rs/):
 
 ```bash
 # Clone and build
-git clone https://github.com/<you>/rslsqp.git
+git clone https://github.com/oberbichler/rslsqp.git
 cd rslsqp
 uv sync
 uv run maturin develop --release          # pure-Rust build

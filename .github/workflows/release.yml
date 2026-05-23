@@ -56,19 +56,27 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add pyproject.toml Cargo.toml
-          git commit -m "chore: bump version to v${{ inputs.version }}"
-          git push origin main
+          if [ -n "$(git status --porcelain)" ]; then
+            git commit -m "chore: bump version to v${{ inputs.version }}"
+            git push origin main
+          else
+            echo "No changes to commit (version is already set to ${{ inputs.version }})."
+          fi
 
       - name: Create and push Git tag
         run: |
-          git tag "v${{ inputs.version }}"
-          git push origin "v${{ inputs.version }}"
+          if git rev-parse "v${{ inputs.version }}" >/dev/null 2>&1; then
+            echo "Tag v${{ inputs.version }} already exists."
+          else
+            git tag "v${{ inputs.version }}"
+            git push origin "v${{ inputs.version }}"
+          fi
 
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release create "v${{ inputs.version }}" --title "v${{ inputs.version }}" --generate-notes
+          gh release create "v${{ inputs.version }}" --title "v${{ inputs.version }}" --generate-notes || echo "Release already exists."
 
   build-windows:
     name: Build Wheels (Windows - x86_64)

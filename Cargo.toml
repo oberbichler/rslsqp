@@ -1,0 +1,24 @@
+[package]
+name = "rslsqp"
+version = "0.1.0"
+edition = "2024"
+license = "BSD-3-Clause"
+
+[lib]
+name = "_core"
+# "cdylib" is necessary to produce a shared library for Python to import from.
+crate-type = ["cdylib"]
+
+[features]
+profiling = []
+blas = []
+
+[dependencies]
+pyo3 = { version = "0.28.2", features = ["extension-module", "abi3-py39"] }
+numpy = "0.28"
+ndarray = "0.17"
+
+[profile.release]
+opt-level = 3
+lto = "fat"
+codegen-units = 1

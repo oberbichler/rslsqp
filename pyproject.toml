@@ -1,0 +1,37 @@
+[project]
+name = "rslsqp"
+version = "0.1.0"
+description = "Rust-backed SLSQP optimiser with Python bindings"
+readme = "README.md"
+license = "BSD-3-Clause"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Thomas", email = "thomas.oberbichler@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.4.6",
+]
+
+[tool.maturin]
+module-name = "rslsqp._core"
+python-packages = ["rslsqp"]
+python-source = "src"
+
+[tool.uv]
+cache-keys = [{ file = "pyproject.toml" }, { file = "src/**/*.rs" }, { file = "Cargo.toml" }, { file = "Cargo.lock" }]
+
+[build-system]
+requires = ["maturin>=1.0,<2.0"]
+build-backend = "maturin"
+
+[dependency-groups]
+dev = [
+    "maturin>=1.0,<2.0",
+    "pytest>=9.0.3",
+    "ruff>=0.15.13",
+    "ty>=0.0.37",
+]
+test = [
+    "scipy>=1.17.1",
+]

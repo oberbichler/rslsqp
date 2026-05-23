@@ -132,6 +132,10 @@ Switching from SciPy requires changing only the import line:
 
 ## Benchmark: rslsqp vs SciPy SLSQP
 
+<p align="center">
+  <img src="benchmark_chart.svg" alt="rslsqp vs SciPy SLSQP speedup benchmark chart" width="700" />
+</p>
+
 All benchmarks run with the **`blas` feature enabled** (macOS Accelerate on
 Apple Silicon).  Both solvers receive identical analytic gradients so the
 comparison isolates solver-core overhead.

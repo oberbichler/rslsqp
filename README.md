@@ -12,6 +12,28 @@ bindings via PyO3.
 Drop-in replacement for `scipy.optimize.minimize(method='SLSQP')`.  Change one
 import line — get a faster solver.
 
+## What problems can SLSQP solve?
+
+SLSQP solves smooth, constrained nonlinear minimisation problems of the form:
+
+```
+minimise   f(x)
+subject to h_i(x) = 0      (equality constraints)
+           g_j(x) ≥ 0      (inequality constraints)
+           x_lo ≤ x ≤ x_hi (variable bounds)
+```
+
+where `f`, `h`, `g` are differentiable functions and `x` is a vector of continuous variables.
+Gradients can be supplied analytically or approximated automatically by finite differences.
+
+Typical applications include:
+
+- **Engineering design** — minimise weight, cost, or energy subject to stress or geometry constraints
+- **Parameter estimation / curve fitting** — minimise residuals with physically meaningful bounds
+- **Control & trajectory optimisation** — optimise inputs subject to dynamics or state constraints
+- **Portfolio optimisation** — maximise risk-adjusted return with budget and allocation constraints
+- Any smooth, bounded, constrained minimisation where gradients are available or can be approximated
+
 ## ✨ Features
 
 - 🚀 **1.5× faster than SciPy** — benchmarked across 12 problems (Rosenbrock,
